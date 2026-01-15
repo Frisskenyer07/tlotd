@@ -24,7 +24,9 @@ Boss battles for epic challenges
 
 Game Over system with respawn or exit options
 
+
 How to Play:
+
 
 1 Launch the game.
 
@@ -38,7 +40,9 @@ How to Play:
 
 6 If you die, the Game Over menu allows you to respawn or exit.
 
+
 Controls:
+
 
 Up Arrow (↑) – Move selection up
 
