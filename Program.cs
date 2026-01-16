@@ -301,6 +301,7 @@ namespace thelegendofthedragon
                                 {
                                     penz -= 100;
                                     weapon = "vaskard";
+                                    shopitemek.Remove("vas kard (-10hp)  100$");
                                     lvl++;
                                 }
                                 else
@@ -314,6 +315,7 @@ namespace thelegendofthedragon
                                 {
                                     penz -= 200;
                                     weapon = "ezüstkard";
+                                    shopitemek.Remove("ezüst kard (-20hp)  200$");
                                     lvl++;
                                 }
                                 else
@@ -327,6 +329,7 @@ namespace thelegendofthedragon
                                 {
                                     penz -= 300;
                                     weapon = "gyémántkard";
+                                    shopitemek.Remove("gyémánt kard (-40hp)  300$");
                                     lvl++;
                                 }
                                 else
@@ -340,6 +343,7 @@ namespace thelegendofthedragon
                                 {
                                     penz -= 100;
                                     inventory.Add("hpboost");
+                                    shopitemek.Remove("+30hp  100$");
                                     hp += 30;
                                 }
                                 else
