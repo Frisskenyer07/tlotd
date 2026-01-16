@@ -123,9 +123,10 @@ namespace thelegendofthedragon
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             //listak
-            List<string> shopitemek = new List<string> { "vas kard (-10hp)  100$", "ezüst kard (-20hp)  200$", "gyémánt kard (-40hp)  300$", "+30hp  100$", "kilépés"};
+            List<string> shopitemek = new List<string> { "vas kard (-10hp)  100$", "ezüst kard (-20hp)  200$", "gyémánt kard (-40hp)  300$", "+30hp  100$", "kilépés" };
+            List<string> shopitemek_copy = new List<string> { "vas kard (-10hp)  100$", "ezüst kard (-20hp)  200$", "gyémánt kard (-40hp)  300$", "+30hp  100$", "kilépés" };
             int penz = 0;
-            List<string> mobok = new List<string> { "slime 10hp (sebzés: -2hp)", "skeleton 20hp (sebzés: -5)", "goblin 30hp (sebzés: -10hp)", "pók 50hp (sebzés: -15hp)", "!!EPICBOSSFIGHT!! sárkány 200hp (sebzés: -20hp)", "titkos entitás hp:??? (sebzés: ???)" };
+            List<string> mobok = new List<string> { "slime 10hp (sebzés: -2hp)", "skeleton 20hp (sebzés: -5)", "goblin 30hp (sebzés: -10hp)", "pók 50hp (sebzés: -15hp)", "!!EPICBOSSFIGHT!! sárkány 200hp (sebzés: -20hp)", "titkos entitás hp:??? (sebzés: ???)", "kilépés"};
             List<string> inventory = new List<string>();
             int lvl = 1;
             int hp = 70;
@@ -400,7 +401,7 @@ namespace thelegendofthedragon
 
                             // Buildmenu
                             List<string> caveMenu = new List<string>(mobok);
-                            caveMenu.Add("Kilépés");
+                            
                             // do while kell mert elősször kiírom a menüt aztán nézem meg mit nyomott a felh
                             do
                             {
@@ -443,8 +444,8 @@ namespace thelegendofthedragon
                             } while (caveKey != ConsoleKey.Enter);
 
                             // 
-                            bool exitCave = (selectedCave == caveMenu.Count - 1);
-                            int cavevalasztas = selectedCave + 2;
+                            bool exitCave = (selectedCave == caveMenu.Count + 2);
+                            int cavevalasztas = selectedCave + 1;
 
                             if (exitCave)
                             {
@@ -494,7 +495,8 @@ namespace thelegendofthedragon
                                         hp = 70;      // reset hp
                                         lvl = 1;
                                         penz = 0;
-                                        shopitemek.AddRange(inventory); //shopreset + inventory reset
+                                        shopitemek.Clear();
+                                        shopitemek.AddRange(shopitemek_copy); //shopreset + inventory reset
                                         inventory.Clear();
                                         cave = false; // exit
 
@@ -558,7 +560,8 @@ namespace thelegendofthedragon
                                         hp = 70;      // reset hp
                                         lvl = 1;
                                         penz = 0;
-                                        shopitemek.AddRange(inventory); //shopreset + inventory reset
+                                        shopitemek.Clear();
+                                        shopitemek.AddRange(shopitemek_copy); //shopreset + inventory reset
                                         inventory.Clear();
                                         cave = false; // exit
                                         break;
@@ -598,7 +601,8 @@ namespace thelegendofthedragon
                                         hp = 70;      // reset hp
                                         lvl = 1;
                                         penz = 0;
-                                        shopitemek.AddRange(inventory); //shopreset + inventory reset
+                                        shopitemek.Clear();
+                                        shopitemek.AddRange(shopitemek_copy); //shopreset + inventory reset
                                         inventory.Clear();
                                         cave = false; // exit
                                         break;
@@ -641,7 +645,8 @@ namespace thelegendofthedragon
                                         hp = 70;      // reset hp
                                         lvl = 1;
                                         penz = 0;
-                                        shopitemek.AddRange(inventory); //shopreset + inventory reset
+                                        shopitemek.Clear();
+                                        shopitemek.AddRange(shopitemek_copy); //shopreset + inventory reset
                                         inventory.Clear();
                                         cave = false; // exit
                                         break;
@@ -696,7 +701,8 @@ namespace thelegendofthedragon
                                         hp = 70;      // reset hp
                                         lvl = 1;
                                         penz = 0;
-                                        shopitemek.AddRange(inventory); //shopreset + inventory reset
+                                        shopitemek.Clear();
+                                        shopitemek.AddRange(shopitemek_copy); //shopreset + inventory reset
                                         inventory.Clear();
                                         cave = false; // exit 
                                         break;
@@ -707,15 +713,8 @@ namespace thelegendofthedragon
                                     }
 
                                     break;
-                                //kilepes
+                                
                                 case 6:
-                                    Console.WriteLine("vissza a town-ba");
-                                    Console.WriteLine("nyomj entert a továbblépéshez");
-                                    while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
-                                    Console.Clear();
-                                    cave = false;
-                                    break;
-                                case 7:
                                     Console.Clear();
                                     Console.WriteLine(@"
                                                              _.'.__
@@ -741,7 +740,8 @@ namespace thelegendofthedragon
                                         hp = 70;      // reset hp
                                         lvl = 1;
                                         penz = 0;
-                                        shopitemek.AddRange(inventory); //shopreset + inventory reset
+                                        shopitemek.Clear();
+                                        shopitemek.AddRange(shopitemek_copy); //shopreset + inventory reset
                                         inventory.Clear();
                                         cave = false; // exit 
                                         break;
@@ -750,8 +750,17 @@ namespace thelegendofthedragon
                                     {
                                         penz += 1000;
                                     }
-                                    
+
                                     break;
+                                //kilepes
+                                case 7:
+                                    Console.WriteLine("vissza a town-ba");
+                                    Console.WriteLine("nyomj entert a továbblépéshez");
+                                    while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+                                    Console.Clear();
+                                    cave = false;
+                                    break;
+                                    
                                 default:
                                     Console.WriteLine("nincs ilyen opció");
                                     break;
