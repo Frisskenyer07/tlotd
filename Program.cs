@@ -409,7 +409,14 @@ namespace thelegendofthedragon
                                 Console.WriteLine("egyenleg: " + penz);
                                 Console.WriteLine("health: " + hp);
                                 Console.WriteLine("level: " + lvl);
-                                Console.WriteLine("fegyver(ek): " + string.Join(", ", inventory));
+                                if (inventory.Count == 0)
+                                {
+                                    Console.WriteLine("fegyvered: fakard (damage: -2hp");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("fegyvered" + inventory);
+                                }
                                 Console.WriteLine();
 
                                 //menu
