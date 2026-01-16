@@ -77,24 +77,22 @@ namespace thelegendofthedragon
             //meg azért public hogy a masik funcion is lassa mer kell neki
         }
 
-        static FightResult Mobs(int mobattack, int mobhp, int lvl, int hp, List<string> inventory)
+        static FightResult Mobs(int mobattack, int mobhp, int lvl, int hp, List<string> inventory, string weapon)
         {
             //sebzesek
             int damage = 5;
 
-            if (lvl >= 2 && inventory.Contains("vaskard"))
+            switch (weapon)
             {
-                damage = 10;
-            }
-
-            if (lvl >= 3 && inventory.Contains("ezüstkard"))
-            {
-                damage = 20;
-            }
-
-            if (lvl >= 4 && inventory.Contains("gyémántkard"))
-            {
-                damage = 40;
+                case "vaskard":
+                    damage = 10;
+                    break;
+                case "ezüstkard":
+                    damage = 20;
+                    break;
+                case "gyémántkard":
+                    damage = 40;
+                    break;
             }
 
             //hp
@@ -126,6 +124,8 @@ namespace thelegendofthedragon
             List<string> shopitemek = new List<string> { "vas kard (-10hp)  100$", "ezüst kard (-20hp)  200$", "gyémánt kard (-40hp)  300$", "+30hp  100$", "kilépés" };
             List<string> shopitemek_copy = new List<string> { "vas kard (-10hp)  100$", "ezüst kard (-20hp)  200$", "gyémánt kard (-40hp)  300$", "+30hp  100$", "kilépés" };
             int penz = 0;
+            string weapon = "fakard";
+
             List<string> mobok = new List<string> { "slime 10hp (sebzés: -2hp)", "skeleton 20hp (sebzés: -5)", "goblin 30hp (sebzés: -10hp)", "pók 50hp (sebzés: -15hp)", "!!EPICBOSSFIGHT!! sárkány 200hp (sebzés: -20hp)", "titkos entitás hp:??? (sebzés: ???)", "kilépés"};
             List<string> inventory = new List<string>();
             int lvl = 1;
@@ -277,8 +277,8 @@ namespace thelegendofthedragon
                             } 
                             while (key_ != ConsoleKey.Enter);
 
-
-                            bool exitShop = (selected_ == shopitemek.Count - 1);
+                            string selectedItem = shopitemek[selected_];
+                            bool exitShop = shopitemek[selected_] == "kilépés";
                             int shopvalasztas = selected_ + 1;
                             //kilepes mar switch nem mükszik ugyh ez kell
                             if (exitShop)
@@ -295,79 +295,67 @@ namespace thelegendofthedragon
                                 Console.Clear();
                                 break;
                             }
-
-                            switch (shopvalasztas)
+                            if (selectedItem == "vas kard (-10hp)  100$")
                             {
-                                case 1:
-                                    if (penz >= 100)
-                                    {
-                                        penz -= 100;
-                                        inventory.Clear();
-                                        shopitemek.Remove("vas kard (-10hp)  100$");
-                                        inventory.Add("vaskard");
-                                        lvl += 1;
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("sorry nincs keret");
-                                    }
-                                    Console.WriteLine("nyomj entert a továbblépéshez");
-                                    while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
-                                    Console.Clear();
-                                    break;
-                                case 2:
-                                    if (penz >= 200)
-                                    {
-                                        penz -= 200;
-                                        inventory.Clear();
-                                        shopitemek.Remove("ezüst kard (-20hp)  200$");
-                                        inventory.Add("ezüstkard");
-                                        lvl += 1;
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("sorry nincs keret");
-                                    }
-                                    Console.WriteLine("nyomj entert a továbblépéshez");
-                                    while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
-                                    Console.Clear();
-                                    break;
-                                case 3:
-                                    if (penz >= 300)
-                                    {
-                                        penz -= 300;
-                                        inventory.Clear();
-                                        shopitemek.Remove("gyémánt kard (-40hp)  300$");
-                                        inventory.Add("gyémántkard");
-                                        lvl += 1;
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("sorry nincs keret");
-                                    }
-                                    Console.WriteLine("nyomj entert a továbblépéshez");
-                                    while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
-                                    Console.Clear();
-                                    break;
-                                case 4:
-                                    if (penz >= 100)
-                                    {
-                                        penz -= 100;
-                                        shopitemek.Remove("+30hp  100$");
-                                        inventory.Add("hpboost");
-                                        hp += 30;
-                                        lvl += 1;
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("sorry nincs keret");
-                                    }
-                                    Console.WriteLine("nyomj entert a továbblépéshez");
-                                    while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
-                                    Console.Clear();
-                                    break;
-                                
+                                if (penz >= 100)
+                                {
+                                    penz -= 100;
+                                    weapon = "vaskard";
+                                    lvl++;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("sorry nincs keret");
+                                }
                             }
+                            else if (selectedItem == "ezüst kard (-20hp)  200$")
+                            {
+                                if (penz >= 200)
+                                {
+                                    penz -= 200;
+                                    weapon = "ezüstkard";
+                                    lvl++;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("sorry nincs keret");
+                                }
+                            }
+                            else if (selectedItem == "gyémánt kard (-40hp)  300$")
+                            {
+                                if (penz >= 300)
+                                {
+                                    penz -= 300;
+                                    weapon = "gyémántkard";
+                                    lvl++;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("sorry nincs keret");
+                                }
+                            }
+                            else if (selectedItem == "+30hp  100$")
+                            {
+                                if (penz >= 100)
+                                {
+                                    penz -= 100;
+                                    inventory.Add("hpboost");
+                                    hp += 30;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("sorry nincs keret");
+                                }
+                            }
+                            else if (selectedItem == "kilépés")
+                            {
+                                Console.WriteLine("hp regenerálva");
+
+                                hp = inventory.Contains("hpboost") ? 100 : 70;
+                                shop = false;
+                            }
+
+                            
                         }
 
                         break;
@@ -409,15 +397,8 @@ namespace thelegendofthedragon
                                 Console.WriteLine("egyenleg: " + penz);
                                 Console.WriteLine("health: " + hp);
                                 Console.WriteLine("level: " + lvl);
-                                if (inventory.Count == 0)
-                                {
-                                    Console.WriteLine("fegyvered: fakard (damage: -2hp");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("fegyvered" + inventory);
-                                }
-                                Console.WriteLine();
+                                Console.WriteLine("fegyvered: " + weapon);
+
 
                                 //menu
                                 for (int i = 0; i < caveMenu.Count; i++)
@@ -493,7 +474,7 @@ namespace thelegendofthedragon
                                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠑⠒⠒⠦⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠚⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
                                     Console.WriteLine(slime);
                                     //fv
-                                    FightResult result = Mobs(2, 10, lvl, hp, inventory);
+                                    FightResult result = Mobs(2, 10, lvl, hp, inventory, weapon);
                                     hp = result.ujHp;
 
                                     if (hp <= 0)
@@ -558,7 +539,7 @@ namespace thelegendofthedragon
                                                                                  |||||";
                                     Console.WriteLine(csonti);
                                     //fv
-                                    FightResult r = Mobs(5, 20, lvl, hp, inventory);
+                                    FightResult r = Mobs(5, 20, lvl, hp, inventory, weapon);
                                     hp = r.ujHp;
 
                                     if (hp <= 0)
@@ -599,7 +580,7 @@ namespace thelegendofthedragon
                                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
                                     Console.WriteLine(goblin);
                                     //fv
-                                    FightResult ry = Mobs(10, 30, lvl, hp, inventory);
+                                    FightResult ry = Mobs(10, 30, lvl, hp, inventory, weapon);
                                     hp = ry.ujHp;
 
                                     if (hp <= 0)
@@ -643,7 +624,7 @@ namespace thelegendofthedragon
                                                                 '";
                                     Console.WriteLine(pok);
                                     //fv
-                                    FightResult rx = Mobs(15, 50, lvl, hp, inventory);
+                                    FightResult rx = Mobs(15, 50, lvl, hp, inventory, weapon);
                                     hp = rx.ujHp;
 
                                     if (hp <= 0)
@@ -699,7 +680,7 @@ namespace thelegendofthedragon
                                                                           '-' -.\";
                                     Console.WriteLine(sarkany);
                                     //fv
-                                    FightResult rf = Mobs(20, 200, lvl, hp, inventory);
+                                    FightResult rf = Mobs(20, 150, lvl, hp, inventory, weapon);
                                     hp = rf.ujHp;
 
                                     if (hp <= 0)
@@ -738,7 +719,7 @@ namespace thelegendofthedragon
                                           .'  _'         .'    _'
                                          |_.-'            '-.'
                                     ");
-                                    FightResult rg = Mobs(50, 150, lvl, hp, inventory);
+                                    FightResult rg = Mobs(50, 150, lvl, hp, inventory, weapon);
                                     hp = rg.ujHp;
 
                                     if (hp <= 0)
